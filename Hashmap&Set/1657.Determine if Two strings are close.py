@@ -1,36 +1,33 @@
+from collections import Counter
+
+# method1
 class Solution:
     def closeStrings(self, word1, word2) :
-        word1_hashmap = {}
-        word2_hashmap = {}
+        if len(word1) != len(word2) or set(word1) != set(word2):
+            return False
 
-        for word in word1:
-            if word in word1_hashmap:
-                word1_hashmap[word] += 1
+        return sorted(Counter(word1).values()) == sorted(Counter(word2).values())
+
+#method2
+class Solution:
+    def closeStrings(self, word1, word2):
+        if len(word1) != len(word2) or set(word1) != set(word2):
+            return False
+
+        word1_dict, word2_dict = {}, {}
+        for (s1, s2) in zip(word1, word2):
+            if s1 not in word1_dict:
+                word1_dict[s1] = 1
             else:
-                word1_hashmap[word] = 0
+                word1_dict[s1] += 1
 
-        for word in word2:
-            if word in word2_hashmap:
-                word2_hashmap[word] += 1
+            if s2 not in word2_dict:
+                word2_dict[s2] = 1
             else:
-                word2_hashmap[word] = 0
+                word2_dict[s2] += 1
 
-        word1_type, word1_num = set(), set()
-        word2_type, word2_num = set(), set()
 
-        for (key, value) in word1_hashmap.items():
-            if key not in word1_type:
-                word1_type.add(key)
-            if value not in word1_num:
-                word1_num.add(value)
-        for (key, value) in word2_hashmap.items():
-            if key not in word2_type:
-                word2_type.add(key)
-            if value not in word2_num:
-                word2_num.add(value)
-        print(word1_type, word1_num, word2_type, word2_num)
-        print(word1_type == word2_type)
-        return (word1_type == word2_type) and (word1_num == word2_num)
+        return sorted(word1_dict.values()) == sorted(word2_dict.values())
 
 if __name__ == '__main__':
     s = Solution()
