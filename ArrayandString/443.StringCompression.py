@@ -4,7 +4,6 @@ class Solution:
         i = 0
         write = 0
 
-        # consecutive_chars = []
         while i < n:
             ch = chars[i]
             consecutive = 0
