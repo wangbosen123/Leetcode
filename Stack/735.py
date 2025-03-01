@@ -1,22 +1,31 @@
 class Solution:
-    def asteroidCollision(self, asteroids: List[int]) -> List[int]:
-        right_dir, left_dir = [], []
+    def asteroidCollision(self, asteroids):
+        stack = []
 
-        for a in asteroids:
-            if a > 0:
-                right_dir.append(a)
+        for ast in asteroids:
 
-            if a < 0:
-                left_dir.append(a)
+            while stack and ast < 0 < stack[-1]:
 
-            while len(right_dir) != 0 or len(left_dir) != 0:
-                if len(right_dir) != 0 and len(left_dir) != 0:
-                    if right_dir[-1] > -left_dir[-1]:
-                        left_dir.pop(-1)
-                    elif right_dir[-1] < -left_dir[-1]:
-                        right_dir.pop(-1)
-                    else:
-                        right_dir.pop(-1)
-                        left_dir.pop(-1)
+                if -ast > stack[-1]:
+                    stack.pop()
+                    continue
 
-        return right_dir + left_dir
+                elif -ast == stack[-1]:
+                    stack.pop()
+                break
+
+            else:
+                stack.append(ast)
+
+
+
+
+
+
+if __name__ == '__main__':
+    s = Solution()
+    # asteroids = [5, 10, -5]
+    # asteroids = [8, -8]
+    # asteroids = [10, 2, -5]
+    asteroids = [-2, -1, 1, 2]
+    print(s.asteroidCollision(asteroids))
